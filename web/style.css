@@ -110,6 +110,7 @@ input[type=range] { width: 100%; accent-color: var(--accent); height: 28px; }
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 8px;
   background: var(--line);
   padding: 8px;
@@ -119,6 +120,7 @@ input[type=range] { width: 100%; accent-color: var(--accent); height: 28px; }
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 3px;
   background: var(--bg);
   border-radius: 8px;
@@ -134,7 +136,8 @@ input[type=range] { width: 100%; accent-color: var(--accent); height: 28px; }
   appearance: none; border: none; border-radius: 5px;
   background: var(--panel); color: var(--text);
   font-size: clamp(16px, 5vw, 30px); font-weight: 800;
-  aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
+  min-width: 0; min-height: 0; /* let cells fill their grid track exactly */
+  display: flex; align-items: center; justify-content: center;
   cursor: default; transition: background .12s, transform .06s; padding: 0; line-height: 1;
 }
 .cell.x { color: var(--x); }

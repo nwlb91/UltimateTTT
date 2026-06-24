@@ -13,6 +13,7 @@ Usage::
 from __future__ import annotations
 
 import argparse
+import copy
 import os
 
 import torch
@@ -21,8 +22,11 @@ from .model import load_net
 
 
 def export(net, path: str, device: str = "cpu") -> str:
-    net.eval().to(device)
     os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+    # Export a detached CPU copy. Moving the *live* training net to another
+    # device (or eval mode) mid-training would break the next GPU step and the
+    # optimizer state, so we never touch it.
+    model = copy.deepcopy(net).to(device).eval()
     dummy = torch.zeros(1, 7, 9, 9, device=device)
     kwargs = dict(
         input_names=["board"],
@@ -38,9 +42,9 @@ def export(net, path: str, device: str = "cpu") -> str:
     # deps). Newer torch defaults to the dynamo exporter; dynamo=False selects
     # the legacy path. Older torch lacks that kwarg -> fall back.
     try:
-        torch.onnx.export(net, dummy, path, dynamo=False, **kwargs)
+        torch.onnx.export(model, dummy, path, dynamo=False, **kwargs)
     except TypeError:
-        torch.onnx.export(net, dummy, path, **kwargs)
+        torch.onnx.export(model, dummy, path, **kwargs)
     return path
 
 

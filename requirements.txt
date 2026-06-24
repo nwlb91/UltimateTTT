@@ -1,0 +1,7 @@
+# Runtime dependencies for the web app (what Render installs).
+# Training deps (PyTorch etc.) live in training/requirements.txt and are NOT
+# needed to serve the app.
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.29
+numpy>=1.26
+onnxruntime>=1.19

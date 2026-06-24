@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Training artifacts (the deployable model models/uttt.onnx IS committed)
+*.pt
+*.ckpt
+training/data/
+training/runs/
+training/checkpoints/
+models/*.tmp.onnx
+
+# Node (only used transiently to vendor the QR lib)
+node_modules/
+package-lock.json
+
+# OS
+.DS_Store

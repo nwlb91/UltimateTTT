@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#0f1220" />
+  <title>Ultimate Tic-Tac-Toe</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="/static/vendor/qrcode.js" defer></script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <button id="home-btn" class="link-btn" title="Home">◀ Ultimate Tic-Tac-Toe</button>
+      <span id="conn-dot" class="conn-dot" title="connection"></span>
+    </header>
+
+    <!-- HOME -->
+    <section id="view-home" class="view">
+      <div class="hero">
+        <h1>Ultimate<br>Tic-Tac-Toe</h1>
+        <p class="subtitle">Nine boards. One winner. Send your opponent where you choose.</p>
+      </div>
+      <div class="menu">
+        <button class="big-btn primary" data-action="play-friend">
+          <span class="big-btn-title">Play a Friend</span>
+          <span class="big-btn-sub">Get a link &amp; QR code to share</span>
+        </button>
+        <button class="big-btn" data-action="play-ai">
+          <span class="big-btn-title">Play the Computer</span>
+          <span class="big-btn-sub">AlphaZero-style AI, adjustable difficulty</span>
+        </button>
+        <button class="link-btn rules-link" data-action="show-rules">How do you play?</button>
+      </div>
+    </section>
+
+    <!-- AI SETUP -->
+    <section id="view-ai-setup" class="view hidden">
+      <h2>Play the Computer</h2>
+      <div class="card">
+        <label class="field-label">Difficulty: <strong id="diff-value">5</strong> <span id="diff-name" class="diff-name">— Medium</span></label>
+        <input id="diff-slider" type="range" min="0" max="10" value="5" step="1" />
+        <p id="diff-desc" class="hint">Higher difficulty = the AI thinks longer and plays sharper.</p>
+
+        <label class="field-label">You play as</label>
+        <div class="seg" id="side-seg">
+          <button class="seg-btn active" data-side="X">X (first)</button>
+          <button class="seg-btn" data-side="O">O (second)</button>
+          <button class="seg-btn" data-side="random">Random</button>
+        </div>
+        <p id="model-note" class="hint"></p>
+      </div>
+      <div class="row">
+        <button class="big-btn" data-action="back-home">Back</button>
+        <button class="big-btn primary" data-action="start-ai">Start Game</button>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section id="view-game" class="view hidden">
+      <div id="status-bar" class="status-bar">
+        <div id="turn-pill" class="turn-pill">Connecting…</div>
+        <div id="you-are" class="you-are"></div>
+      </div>
+
+      <div id="board" class="board" aria-label="game board"></div>
+
+      <div id="result-banner" class="result-banner hidden">
+        <span id="result-text"></span>
+        <button class="big-btn primary" data-action="rematch">Rematch</button>
+        <button class="big-btn" data-action="back-home">Home</button>
+      </div>
+
+      <div id="game-controls" class="game-controls">
+        <button class="link-btn" data-action="copy-link">🔗 Copy invite link</button>
+      </div>
+
+      <!-- share / waiting overlay (PvP) -->
+      <div id="share-overlay" class="overlay hidden">
+        <div class="overlay-card">
+          <h3>Invite your opponent</h3>
+          <p class="hint">Send this link or have them scan the code. The match starts when they join.</p>
+          <div id="qr" class="qr"></div>
+          <div class="share-link">
+            <input id="share-input" readonly />
+            <button id="copy-btn" class="copy-btn">Copy</button>
+          </div>
+          <div class="waiting-spinner"><span></span> Waiting for opponent…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RULES -->
+    <section id="view-rules" class="view hidden">
+      <h2>How to play</h2>
+      <div class="card rules">
+        <p>The big board is a 3×3 grid of nine small Tic-Tac-Toe boards.</p>
+        <ol>
+          <li><b>Your move decides your opponent's board.</b> If you play in the
+            top-right square of a small board, your opponent must next play in the
+            top-right <i>small board</i>.</li>
+          <li><b>Win a small board</b> (three in a row) to claim it on the big board.</li>
+          <li><b>Win three small boards in a row</b> to win the game.</li>
+          <li><b>Free move:</b> if you're sent to a board that's already won or full,
+            you may play in any open board.</li>
+        </ol>
+        <p class="hint">Highlighted squares are your legal moves. The glowing board is where you must play.</p>
+      </div>
+      <button class="big-btn primary" data-action="back-home">Got it</button>
+    </section>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+</body>
+</html>

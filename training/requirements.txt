@@ -1,0 +1,8 @@
+# Training-only dependencies (NOT needed to serve the app).
+# On Google Colab, torch is already installed, so this is fast.
+torch>=2.1
+numpy>=1.26
+onnx>=1.15
+onnxruntime>=1.19
+# Needed by torch's newer (dynamo) ONNX exporter; harmless otherwise.
+onnxscript>=0.1.0
